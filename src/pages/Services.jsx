@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 // Mock services data (replace with real API later)
 const mockServices = [
@@ -8,7 +8,7 @@ const mockServices = [
   // Add more mock services as needed
 ];
 
-export default function ServiceSelector() {
+export function ServiceSelector() {
   const [services] = useState(mockServices);
   const [selectedIds, setSelectedIds] = useState([]);
   const [activeCategory, setActiveCategory] = useState('الكل');
