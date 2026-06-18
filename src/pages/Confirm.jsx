@@ -2,9 +2,13 @@ import React from 'react'
 import { useLocation } from 'react-router-dom'
 
 export default function Confirm() {
-  const { state } = useLocation()
-  if (!state) return <div className="page"><p>لا توجد بيانات.</p></div>
-
+  const location = useLocation()
+  const state = location.state || {
+    ticketNumber: 'A0000',
+    name: 'عميل تجريبي',
+    phone: '0000000000',
+    expiresAt: Date.now() + 5*60*1000
+  }
   // mock computation:
   const peopleAhead = Math.floor(Math.random() * 5)
   const expectedMinutes = (peopleAhead + 1) * 10
@@ -13,6 +17,7 @@ export default function Confirm() {
     <div className="page">
       <h2>تم تسجيلك ✅</h2>
       <p>رقمك: <strong>{state.ticketNumber}</strong></p>
+      <p>الاسم: <strong>{state.name}</strong></p>
       <p>يوجد قبلك: <strong>{peopleAhead} عملاء</strong></p>
       <p>الوقت المتوقع: <strong>{expectedMinutes} دقيقة</strong></p>
       <p>رمز الجلسة: {state.sessionId}</p>

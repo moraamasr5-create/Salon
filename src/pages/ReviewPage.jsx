@@ -49,6 +49,7 @@ export default function ReviewPage() {
   const submit = async (e) => {
     e.preventDefault();
     setLoading(true);
+    console.log('Review submitted:', { serviceRatings, overall: calculateOverall(), comment });
     // Simulate async request
     setTimeout(() => {
       setLoading(false);

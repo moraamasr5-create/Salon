@@ -1,12 +1,12 @@
 {
-  "name": "Salon PWA",
-  "short_name": "Salon",
+  "name": "صالون عز",
+  "short_name": "صالون",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "description": "Quick queue and appointments for the salon",
+  "background_color": "#0a0a0a",
+  "theme_color": "#C9A84C",
+  "description": "نظام إدارة صالون الحلاقة",
   "icons": [
-    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" },
-    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png" }
+    { "src": "/favicon.ico", "sizes": "48x48", "type": "image/x-icon" }
   ]
 }

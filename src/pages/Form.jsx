@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
+import useQueue from '../hooks/useQueue'
 
 export default function Form() {
   const { state } = useLocation()
@@ -8,19 +9,14 @@ export default function Form() {
   const [phone, setPhone] = useState('')
   const [visited, setVisited] = useState(false)
   const [mode, setMode] = useState('join')
+  const { addTicket } = useQueue()
 
-  async function submit() {
-    // No default form behavior
+  function submit() {
     try {
-      const res = await fetch((import.meta.env.VITE_API_BASE || 'http://localhost:3000') + '/api/ticket', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, phone, services: [], mode })
-      })
-      const data = await res.json()
-      if (!res.ok) throw new Error(data.error || 'Server error')
-      // navigate to confirm with server response
-      navigate('/confirm', { state: { ticketNumber: data.ticket, name: data.customer.name, phone: data.customer.phone, expiresAt: Date.now() + 5*60*1000 } })
+      const ticketNumber = `A${Math.floor(1000 + Math.random() * 9000)}`
+      const newTicket = { name, phone, services: [], mode, ticketNumber }
+      addTicket(newTicket)
+      navigate('/confirm', { state: { ticketNumber, name, phone, expiresAt: Date.now() + 5*60*1000 } })
     } catch (err) {
       alert('فشل في إنشاء التذكرة: ' + err.message)
     }

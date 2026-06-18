@@ -20,35 +20,30 @@ export default function Review() {
       return
     }
     setSessionCode(code)
-    fetch((import.meta.env.VITE_API_BASE || 'http://localhost:3000') + '/api/review-session?session_code=' + encodeURIComponent(code))
-      .then(res => res.json().then(data => ({ ok: res.ok, data })))
-      .then(({ ok, data }) => {
-        if (!ok) throw new Error(data.error || 'فشل تحميل الجلسة')
-        setMeta(data)
+    setSessionCode(code)
+    // Mock data for session
+    setTimeout(() => {
+      setMeta({
+        ticket: 'A010',
+        customer: { name: 'عميل تجريبي' },
+        visit: { services: [{ id: 1, name: 'قص شعر', price: 50 }] }
       })
-      .catch(err => setError(err.message))
-      .finally(() => setLoading(false))
+      setLoading(false)
+    }, 500)
   }, [location.search])
 
-  async function submitReview(e) {
-    e.preventDefault()
+  function submitReview(e) {
+    if (e) e.preventDefault()
     if (!review.rating) return setError('يرجى اختيار عدد النجوم.')
     setLoading(true)
     setError(null)
-    try {
-      const res = await fetch((import.meta.env.VITE_API_BASE || 'http://localhost:3000') + '/api/reviews', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ session_code: sessionCode, rating: review.rating, comment: review.comment })
-      })
-      const data = await res.json()
-      if (!res.ok) throw new Error(data.error || 'Failed to submit review')
+    
+    // Simulate API call
+    setTimeout(() => {
+      console.log('Review submitted:', { sessionCode, rating: review.rating, comment: review.comment })
       setSubmitted(true)
-    } catch (err) {
-      setError(err.message)
-    } finally {
       setLoading(false)
-    }
+    }, 1000)
   }
 
   if (loading) return <div className="page"><p>جاري التحميل…</p></div>

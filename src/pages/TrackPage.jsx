@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
+import useQueue from '../hooks/useQueue';
 
 // Mock data for demonstration
-const mockData = {
+// Default Mock data for demonstration
+const defaultMockData = {
   ticket: 'A023',
-  position: 5, // Queue position
+  position: 3, // Queue position
   status: 'waiting', // waiting | serving | completed
-  peopleAhead: 4,
+  peopleAhead: 2,
   service: 'قص شعر',
   expectedMinutes: 15,
 };
@@ -19,13 +21,33 @@ const statusMap = {
 
 export default function TrackPage() {
   const [input, setInput] = useState('');
-  const [show, setShow] = useState(false);
+  const [ticketData, setTicketData] = useState(defaultMockData);
+  const { queue } = useQueue();
 
-  // In a real app we'd fetch based on input; here we just display mock data
-  const handleSearch = () => setShow(true);
+  const handleSearch = () => {
+    const found = queue.find(t => t.phone === input || t.ticketNumber === input || t.id.toString() === input);
+    
+    if (found) {
+      const waitingTickets = queue.filter(t => t.status === 'waiting');
+      const positionIndex = waitingTickets.findIndex(t => t.id === found.id);
+      const position = positionIndex >= 0 ? positionIndex + 1 : 0;
+      
+      setTicketData({
+        ticket: found.ticketNumber || found.id,
+        position: position || '-',
+        status: found.status || 'waiting',
+        peopleAhead: position > 0 ? position - 1 : 0,
+        service: found.services?.length ? found.services.map(s => s.name).join(', ') : 'خدمة عامة',
+        expectedMinutes: (position > 0 ? position * 10 : 0) || 10
+      });
+    } else {
+      setTicketData({ ...defaultMockData, ticket: input || defaultMockData.ticket });
+    }
+    setShow(true);
+  };
 
   // Calculate progress for the arc (0-100%) based on expected minutes vs max 30 mins
-  const progress = Math.min((mockData.expectedMinutes / 30) * 100, 100);
+  const progress = Math.min((ticketData.expectedMinutes / 30) * 100, 100);
 
   return (
     <div className="page track-page">
@@ -43,7 +65,7 @@ export default function TrackPage() {
         <div className="track-info" style={{ border: '1px solid #444', padding: 12, textAlign: 'center' }}>
           {/* Queue Position */}
           <div className="queue-position" style={{ fontSize: '3rem', color: 'var(--color-primary)' }}>
-            {mockData.position}
+            {ticketData.position}
           </div>
           <div className="label">موقعك في الصف</div>
 
@@ -52,7 +74,7 @@ export default function TrackPage() {
             className="status-badge"
             style={{
               display: 'inline-block',
-              background: statusMap[mockData.status].color,
+              background: statusMap[ticketData.status].color,
               color: '#000',
               padding: '4px 12px',
               borderRadius: '12px',
@@ -60,7 +82,7 @@ export default function TrackPage() {
               animation: 'pulse 2s infinite',
             }}
           >
-            {statusMap[mockData.status].label}
+            {statusMap[ticketData.status].label}
           </div>
 
           {/* Progress Arc */}
@@ -85,16 +107,16 @@ export default function TrackPage() {
                 strokeLinecap="round"
               />
               <text x="18" y="20.35" className="percentage" textAnchor="middle" fill="#fff" fontSize="8">
-                {mockData.expectedMinutes} دقيقة
+                {ticketData.expectedMinutes} دقيقة
               </text>
             </svg>
           </div>
 
           {/* People Ahead */}
-          <div className="people-ahead">عدد الأشخاص قبلك: {mockData.peopleAhead}</div>
+          <div className="people-ahead">عدد الأشخاص قبلك: {ticketData.peopleAhead}</div>
 
           {/* Current Service */}
-          <div className="current-service">الخدمة الحالية: {mockData.service}</div>
+          <div className="current-service">الخدمة الحالية: {ticketData.service}</div>
         </div>
       )}
     </div>

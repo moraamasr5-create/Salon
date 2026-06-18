@@ -117,11 +117,19 @@ export default function BookingWizard() {
       {step === 3 && (
         <div className="step step-3">
           <h2 className="title">الخطوة 3 – التأكيد</h2>
+          <p>الاسم: <strong>{name}</strong></p>
+          <p>رقم الهاتف: <strong>{phone}</strong></p>
+          <p>عدد الخدمات: <strong>{selectedServices.length}</strong></p>
           <p>رقم التذكرة: <strong>{mockTicket}</strong></p>
           <p>الوقت المتوقع للانتظار: <strong>{mockWait} دقيقة</strong></p>
           <p>شكراً لتسجيلك! سيصلك إشعار عندما يقترب دورك.</p>
           <div className="nav-buttons" style={{ marginTop: 'var(--spacing-md)' }}>
-            <button onClick={() => setStep(1)}>حجز آخر</button>
+            <button onClick={() => {
+              setName('');
+              setPhone('');
+              setSelectedServices([]);
+              setStep(1);
+            }}>حجز آخر</button>
           </div>
         </div>
       )}
