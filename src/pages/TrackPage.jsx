@@ -22,6 +22,7 @@ const statusMap = {
 export default function TrackPage() {
   const [input, setInput] = useState('');
   const [ticketData, setTicketData] = useState(defaultMockData);
+  const [show, setShow] = useState(false);
   const { queue } = useQueue();
 
   const handleSearch = () => {

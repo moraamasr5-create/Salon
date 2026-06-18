@@ -46,8 +46,7 @@ export default function ReviewPage() {
     return Math.round(avg);
   };
 
-  const submit = async (e) => {
-    e.preventDefault();
+  const submit = async () => {
     setLoading(true);
     console.log('Review submitted:', { serviceRatings, overall: calculateOverall(), comment });
     // Simulate async request

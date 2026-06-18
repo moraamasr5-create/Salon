@@ -26,6 +26,7 @@ export default function Onboarding() {
       tenantConfig: { slug, ownerPhone },
       plan,
     });
+    localStorage.setItem('salon_authed', '1');
     navigate('/dashboard');
   };
 
