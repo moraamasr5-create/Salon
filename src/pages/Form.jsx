@@ -9,8 +9,8 @@ export default function Form() {
   const [visited, setVisited] = useState(false)
   const [mode, setMode] = useState('join')
 
-  async function submit(e) {
-    e.preventDefault()
+  async function submit() {
+    // No default form behavior
     try {
       const res = await fetch((import.meta.env.VITE_API_BASE || 'http://localhost:3000') + '/api/ticket', {
         method: 'POST',
@@ -29,7 +29,7 @@ export default function Form() {
   return (
     <div className="page">
       <h2>نموذج التسجيل</h2>
-      <form onSubmit={submit} className="form">
+      <div className="form" style={{cursor: 'pointer'}}>
         <label>الاسم (مطلوب)
           <input value={name} onChange={e=>setName(e.target.value)} required />
         </label>
@@ -47,8 +47,8 @@ export default function Form() {
             <input type="radio" name="mode" value="book" checked={mode==='book'} onChange={()=>setMode('book')} /> حجز الآن
           </label>
         </div>
-        <button type="submit">تأكيد</button>
-      </form>
+        <button type="button" onClick={submit}>تأكيد</button>
+      </div>
     </div>
   )
 }
