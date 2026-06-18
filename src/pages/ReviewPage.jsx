@@ -62,7 +62,11 @@ export default function ReviewPage() {
       <div className="page review-page">
         <h2>تم إرسالك!</h2>
         <p>شكراً لتقييمك. سيتم مراجعة ملاحظاتك قريباً.</p>
-        <button onClick={() => setSubmitted(false)} style={{ marginTop: 16 }}>
+        <button onClick={() => {
+          setSubmitted(false);
+          setServiceRatings(mockReview.services.reduce((acc, s) => ({ ...acc, [s.id]: 0 }), {}));
+          setComment('');
+        }} style={{ marginTop: 16, padding: '8px 16px' }}>
           تقييم آخر
         </button>
       </div>

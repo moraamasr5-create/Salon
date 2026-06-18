@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 // Mock queue data
-const mockQueue = [
+const initialQueue = [
   {
     id: 1,
     name: 'أحمد السعيد',
@@ -51,11 +51,16 @@ function StatusBadge({ status }) {
 }
 
 export default function QueuePage() {
+  const [queue, setQueue] = useState(initialQueue);
   const [filter, setFilter] = useState('all');
 
-  const filtered = mockQueue.filter((item) =>
+  const filtered = queue.filter((item) =>
     filter === 'all' ? true : item.status === filter
   );
+
+  const changeStatus = (id, newStatus) => {
+    setQueue(prev => prev.map(item => item.id === id ? { ...item, status: newStatus } : item));
+  };
 
   // Sort by id (position)
   const sorted = [...filtered].sort((a, b) => a.id - b.id);
@@ -114,12 +119,12 @@ export default function QueuePage() {
             </div>
             {/* Action button */}
             {item.status === 'waiting' && (
-              <button style={{ alignSelf: 'flex-start', background: 'var(--color-primary)', color: 'var(--color-bg)', border: 'none', borderRadius: 'var(--radius)', padding: 'var(--spacing-xs) var(--spacing-sm)', cursor: 'pointer' }}>
+              <button onClick={() => changeStatus(item.id, 'serving')} style={{ alignSelf: 'flex-start', background: 'var(--color-primary)', color: 'var(--color-bg)', border: 'none', borderRadius: 'var(--radius)', padding: 'var(--spacing-xs) var(--spacing-sm)', cursor: 'pointer' }}>
                 ابدأ الخدمة
               </button>
             )}
             {item.status === 'serving' && (
-              <button style={{ alignSelf: 'flex-start', background: '#f44336', color: '#fff', border: 'none', borderRadius: 'var(--radius)', padding: 'var(--spacing-xs) var(--spacing-sm)', cursor: 'pointer' }}>
+              <button onClick={() => changeStatus(item.id, 'completed')} style={{ alignSelf: 'flex-start', background: '#f44336', color: '#fff', border: 'none', borderRadius: 'var(--radius)', padding: 'var(--spacing-xs) var(--spacing-sm)', cursor: 'pointer' }}>
                 أنهي الخدمة
               </button>
             )}

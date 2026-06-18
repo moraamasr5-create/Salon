@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 /**
  * BookingWizard – a 3‑step wizard for the booking flow.
@@ -123,13 +124,23 @@ export default function BookingWizard() {
           <p>رقم التذكرة: <strong>{mockTicket}</strong></p>
           <p>الوقت المتوقع للانتظار: <strong>{mockWait} دقيقة</strong></p>
           <p>شكراً لتسجيلك! سيصلك إشعار عندما يقترب دورك.</p>
-          <div className="nav-buttons" style={{ marginTop: 'var(--spacing-md)' }}>
+          <div className="nav-buttons" style={{ marginTop: 'var(--spacing-md)', display: 'flex', gap: 'var(--spacing-sm)' }}>
             <button onClick={() => {
               setName('');
               setPhone('');
               setSelectedServices([]);
               setStep(1);
             }}>حجز آخر</button>
+            <Link to="/track" style={{ 
+              display: 'inline-block', 
+              background: '#333', 
+              color: '#fff', 
+              padding: '12px 24px', 
+              borderRadius: 'var(--radius)', 
+              textDecoration: 'none', 
+              textAlign: 'center',
+              fontWeight: 'bold'
+            }}>تتبع دوري</Link>
           </div>
         </div>
       )}

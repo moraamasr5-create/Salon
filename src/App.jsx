@@ -1,6 +1,7 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Scan from './pages/Scan';
+import BookingWizard from './components/BookingWizard';
 import Form from './pages/Form';
 import Confirm from './pages/Confirm';
 import Tablet from './pages/Tablet';
@@ -27,7 +28,7 @@ export default function App() {
     <RootLayout>
       <Routes>
         <Route path="/" element={<Landing />} />
-        <Route path="/book" element={<Form />} />
+        <Route path="/book" element={<BookingWizard />} />
         <Route path="/track" element={<TrackPage />} />
         <Route path="/review" element={<ReviewPage />} />
         <Route path="/dashboard/*" element={
