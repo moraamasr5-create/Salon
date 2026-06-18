@@ -28,7 +28,7 @@ export default function App() {
         <Route path="/book" element={<Form />} />
         <Route path="/track" element={<TrackPage />} />
         <Route path="/review" element={<ReviewPage />} />
-        <Route path="/dashboard/*" element={<DashboardLayout />}>
+        <Route path="/dashboard/*" element={<DashboardLayout />} />
         <Route path="/login" element={<Login />} />
         {/* keep existing routes for compatibility */}
         <Route path="/scan" element={<Scan />} />
