@@ -1,7 +1,7 @@
 import React from 'react';
-import { Link, Outlet } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
-export default function RootLayout() {
+export default function RootLayout({ children }) {
   return (
     <div className="app">
       <header className="header">
@@ -16,7 +16,7 @@ export default function RootLayout() {
         </nav>
       </header>
       <main className="main">
-        <Outlet />
+        {children}
       </main>
     </div>
   );
