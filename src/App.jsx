@@ -19,16 +19,22 @@ import DashboardReviews from './pages/DashboardReviews';
 import DashboardSettings from './pages/DashboardSettings';
 import Login from './pages/Login';
 import RootLayout from './components/RootLayout';
+import AuthGuard from './components/AuthGuard';
+import Landing from './pages/Landing';
 
 export default function App() {
   return (
     <RootLayout>
       <Routes>
-        <Route path="/" element={<Scan />} />
+        <Route path="/" element={<Landing />} />
         <Route path="/book" element={<Form />} />
         <Route path="/track" element={<TrackPage />} />
         <Route path="/review" element={<ReviewPage />} />
-        <Route path="/dashboard/*" element={<DashboardLayout />} />
+        <Route path="/dashboard/*" element={
+          <AuthGuard>
+            <DashboardLayout />
+          </AuthGuard>
+        } />
         <Route path="/login" element={<Login />} />
         {/* keep existing routes for compatibility */}
         <Route path="/scan" element={<Scan />} />
