@@ -72,7 +72,7 @@ export default function Review() {
           <li key={s.id}>{s.name} — {s.price} EGP</li>
         ))}
       </ul>
-      <form onSubmit={submitReview} style={{ maxWidth: 400 }}>
+      <div style={{ maxWidth: 400 }}>
         <div style={{ marginBottom: 12 }}>
           <label>اختر عدد النجوم</label>
           <div style={{ display: 'flex', gap: 8, marginTop: 8 }}>
@@ -101,8 +101,8 @@ export default function Review() {
           />
         </div>
         {error && <div className="error" style={{ marginBottom: 12 }}>{error}</div>}
-        <button type="submit" disabled={loading}>{loading ? 'جارٍ الإرسال…' : 'إرسال التقييم'}</button>
-      </form>
+        <button onClick={submitReview} disabled={loading}>{loading ? 'جارٍ الإرسال…' : 'إرسال التقييم'}</button>
+      </div>
     </div>
   )
 }

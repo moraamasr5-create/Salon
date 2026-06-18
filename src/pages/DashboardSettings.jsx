@@ -7,7 +7,7 @@ export default function DashboardSettings() {
   
   const [name, setName] = useState(tenantName || '');
   const [phone, setPhone] = useState(tenantConfig?.ownerPhone || '');
-  const [color, setColor] = useState(tenantConfig?.primaryColor || '#c9a84c');
+  const [color, setColor] = useState(tenantConfig?.primaryColor || 'var(--color-primary)');
   const [chatId, setChatId] = useState(tenantConfig?.telegramChatId || '');
   const [telegramEnabled, setTelegramEnabled] = useState(tenantConfig?.telegramEnabled || false);
   
@@ -16,7 +16,7 @@ export default function DashboardSettings() {
   useEffect(() => {
     setName(tenantName || '');
     setPhone(tenantConfig?.ownerPhone || '');
-    setColor(tenantConfig?.primaryColor || '#c9a84c');
+    setColor(tenantConfig?.primaryColor || 'var(--color-primary)');
     setChatId(tenantConfig?.telegramChatId || '');
     setTelegramEnabled(tenantConfig?.telegramEnabled || false);
   }, [tenantName, tenantConfig]);
@@ -46,15 +46,27 @@ export default function DashboardSettings() {
   };
 
   return (
-    <div className="p-6 max-w-4xl mx-auto text-white" dir="rtl">
-      <div className="mb-8 flex items-center justify-between">
+    <div dir="rtl" style={{ padding: 'var(--spacing-lg)', maxWidth: '900px', margin: '0 auto', color: 'var(--color-text)' }}>
+      
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 'var(--spacing-lg)' }}>
         <div>
-          <h2 className="text-3xl font-serif mb-2">إعدادات الصالون</h2>
-          <p className="text-neutral-400">إدارة معلومات وبيانات صالونك</p>
+          <h2 style={{ fontSize: '1.8rem', marginBottom: 'var(--spacing-xs)' }}>إعدادات الصالون</h2>
+          <p style={{ color: 'var(--color-muted)', margin: 0 }}>إدارة معلومات وبيانات صالونك</p>
         </div>
         <button
           onClick={handleSave}
-          className="bg-gradient-to-r from-amber-600 to-amber-500 hover:from-amber-500 hover:to-amber-400 text-white px-6 py-2.5 rounded-xl font-medium flex items-center gap-2 transition-all shadow-lg shadow-amber-900/20"
+          style={{
+            background: 'var(--color-primary)',
+            color: 'var(--color-bg)',
+            padding: '10px 20px',
+            borderRadius: 'var(--radius)',
+            fontWeight: 'bold',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '8px',
+            border: 'none',
+            cursor: 'pointer'
+          }}
         >
           <Save size={20} />
           <span>حفظ التغييرات</span>
@@ -62,37 +74,51 @@ export default function DashboardSettings() {
       </div>
 
       {toast && (
-        <div className="fixed bottom-4 right-4 bg-green-500/10 border border-green-500/50 text-green-400 px-4 py-3 rounded-xl flex items-center gap-2 shadow-lg">
-          <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+        <div style={{
+          position: 'fixed',
+          bottom: '20px',
+          right: '20px',
+          background: 'rgba(74, 222, 128, 0.1)',
+          border: '1px solid rgba(74, 222, 128, 0.5)',
+          color: '#4ade80',
+          padding: '12px 16px',
+          borderRadius: 'var(--radius)',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '8px',
+          zIndex: 1000
+        }}>
+          <div style={{ width: '8px', height: '8px', background: '#4ade80', borderRadius: '50%' }}></div>
           <span>تم حفظ الإعدادات بنجاح</span>
         </div>
       )}
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div style={{ display: 'flex', gap: 'var(--spacing-lg)', flexWrap: 'wrap' }}>
+        
         {/* Info Card */}
-        <div className="lg:col-span-1 space-y-6">
-          <div className="bg-neutral-800/50 border border-neutral-700/50 rounded-2xl p-6">
-            <h3 className="text-xl font-serif mb-4 flex items-center gap-2 text-amber-500">
+        <div style={{ flex: '1 1 250px', display: 'flex', flexDirection: 'column', gap: 'var(--spacing-lg)' }}>
+          <div style={{ background: '#1a1a1a', border: '1px solid #333', borderRadius: 'var(--radius)', padding: 'var(--spacing-lg)' }}>
+            <h3 style={{ fontSize: '1.2rem', marginBottom: 'var(--spacing-md)', display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--color-primary)' }}>
               <Settings size={20} />
               <span>بيانات الحساب</span>
             </h3>
             
-            <div className="space-y-4">
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-md)' }}>
               <div>
-                <span className="block text-sm text-neutral-400 mb-1">اسم الصالون الحالي</span>
-                <span className="text-lg font-medium">{tenantName}</span>
+                <span style={{ display: 'block', fontSize: '0.9rem', color: 'var(--color-muted)', marginBottom: '4px' }}>اسم الصالون الحالي</span>
+                <span style={{ fontSize: '1.1rem', fontWeight: '500' }}>{tenantName}</span>
               </div>
               
               <div>
-                <span className="block text-sm text-neutral-400 mb-1">المعرف (Slug)</span>
-                <span className="text-neutral-300 font-mono bg-neutral-900 px-2 py-1 rounded text-sm">
+                <span style={{ display: 'block', fontSize: '0.9rem', color: 'var(--color-muted)', marginBottom: '4px' }}>المعرف (Slug)</span>
+                <span style={{ color: '#ddd', background: '#000', padding: '4px 8px', borderRadius: '4px', fontSize: '0.9rem', fontFamily: 'monospace' }}>
                   {tenantConfig?.slug || tenantId}
                 </span>
               </div>
               
               <div>
-                <span className="block text-sm text-neutral-400 mb-1">الباقة الحالية</span>
-                <span className="inline-block px-3 py-1 bg-amber-500/10 text-amber-500 border border-amber-500/20 rounded-full text-sm font-medium">
+                <span style={{ display: 'block', fontSize: '0.9rem', color: 'var(--color-muted)', marginBottom: '4px' }}>الباقة الحالية</span>
+                <span style={{ display: 'inline-block', padding: '4px 12px', background: 'rgba(201, 168, 76, 0.1)', color: 'var(--color-primary)', border: '1px solid rgba(201, 168, 76, 0.2)', borderRadius: '20px', fontSize: '0.9rem', fontWeight: '500' }}>
                   {getPlanBadgeName()}
                 </span>
               </div>
@@ -100,27 +126,27 @@ export default function DashboardSettings() {
           </div>
         </div>
 
-        {/* Edit Form (No <form> tags) */}
-        <div className="lg:col-span-2 space-y-6">
+        {/* Edit Form */}
+        <div style={{ flex: '2 1 400px', display: 'flex', flexDirection: 'column', gap: 'var(--spacing-lg)' }}>
           
-          <div className="bg-neutral-800/50 border border-neutral-700/50 rounded-2xl p-6">
-            <h3 className="text-xl font-serif mb-6 border-b border-neutral-700/50 pb-4">المعلومات الأساسية</h3>
+          <div style={{ background: '#1a1a1a', border: '1px solid #333', borderRadius: 'var(--radius)', padding: 'var(--spacing-lg)' }}>
+            <h3 style={{ fontSize: '1.2rem', marginBottom: 'var(--spacing-lg)', borderBottom: '1px solid #333', paddingBottom: 'var(--spacing-md)' }}>المعلومات الأساسية</h3>
             
-            <div className="space-y-5">
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-lg)' }}>
               <div>
-                <label className="block text-sm font-medium text-neutral-300 mb-1.5">اسم الصالون</label>
+                <label style={{ display: 'block', fontSize: '0.9rem', fontWeight: '500', color: '#ccc', marginBottom: '6px' }}>اسم الصالون</label>
                 <input
                   type="text"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  className="w-full bg-neutral-900 border border-neutral-700 rounded-xl py-2.5 px-4 text-white focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 transition-colors"
+                  style={{ width: '100%', background: '#000', border: '1px solid #333', borderRadius: 'var(--radius)', padding: '10px 16px', color: 'var(--color-text)', outline: 'none', boxSizing: 'border-box' }}
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-neutral-300 mb-1.5">رقم هاتف المالك</label>
-                <div className="relative">
-                  <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-neutral-500">
+                <label style={{ display: 'block', fontSize: '0.9rem', fontWeight: '500', color: '#ccc', marginBottom: '6px' }}>رقم هاتف المالك</label>
+                <div style={{ position: 'relative' }}>
+                  <div style={{ position: 'absolute', top: 0, bottom: 0, right: 0, display: 'flex', alignItems: 'center', paddingRight: '12px', pointerEvents: 'none', color: '#666' }}>
                     <Phone size={18} />
                   </div>
                   <input
@@ -128,52 +154,58 @@ export default function DashboardSettings() {
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
                     dir="ltr"
-                    className="w-full bg-neutral-900 border border-neutral-700 rounded-xl py-2.5 pl-4 pr-10 text-white focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 transition-colors text-left"
+                    style={{ width: '100%', background: '#000', border: '1px solid #333', borderRadius: 'var(--radius)', padding: '10px 16px 10px 40px', color: 'var(--color-text)', outline: 'none', textAlign: 'left', boxSizing: 'border-box' }}
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-neutral-300 mb-1.5">اللون الرئيسي للصالون</label>
-                <div className="flex items-center gap-4 bg-neutral-900 border border-neutral-700 rounded-xl p-2 px-4">
-                  <Palette size={20} className="text-neutral-500" />
+                <label style={{ display: 'block', fontSize: '0.9rem', fontWeight: '500', color: '#ccc', marginBottom: '6px' }}>اللون الرئيسي للصالون</label>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--spacing-md)', background: '#000', border: '1px solid #333', borderRadius: 'var(--radius)', padding: '8px 16px' }}>
+                  <Palette size={20} color="#666" />
                   <input
                     type="color"
                     value={color}
                     onChange={(e) => setColor(e.target.value)}
-                    className="h-8 w-14 cursor-pointer bg-transparent border-none p-0"
+                    style={{ height: '32px', width: '56px', cursor: 'pointer', background: 'transparent', border: 'none', padding: 0 }}
                   />
-                  <span className="font-mono text-sm text-neutral-400">{color}</span>
+                  <span style={{ fontFamily: 'monospace', fontSize: '0.9rem', color: '#888' }}>{color}</span>
                 </div>
               </div>
             </div>
           </div>
 
-          <div className="bg-neutral-800/50 border border-neutral-700/50 rounded-2xl p-6">
-            <h3 className="text-xl font-serif mb-6 border-b border-neutral-700/50 pb-4 flex items-center gap-2">
-              <MessageCircle size={20} className="text-blue-400" />
+          <div style={{ background: '#1a1a1a', border: '1px solid #333', borderRadius: 'var(--radius)', padding: 'var(--spacing-lg)' }}>
+            <h3 style={{ fontSize: '1.2rem', marginBottom: 'var(--spacing-lg)', borderBottom: '1px solid #333', paddingBottom: 'var(--spacing-md)', display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <MessageCircle size={20} color="#60a5fa" />
               <span>إشعارات تيليجرام</span>
             </h3>
             
-            <div className="space-y-5">
-              <div className="flex items-center justify-between bg-neutral-900 border border-neutral-700 rounded-xl p-4">
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-lg)' }}>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: '#000', border: '1px solid #333', borderRadius: 'var(--radius)', padding: 'var(--spacing-md)' }}>
                 <div>
-                  <h4 className="font-medium text-white mb-1">تفعيل إشعارات الحجز</h4>
-                  <p className="text-sm text-neutral-400">استلام رسائل فورية عند وجود حجز جديد</p>
+                  <h4 style={{ fontWeight: '500', color: '#fff', margin: '0 0 4px 0' }}>تفعيل إشعارات الحجز</h4>
+                  <p style={{ fontSize: '0.9rem', color: 'var(--color-muted)', margin: 0 }}>استلام رسائل فورية عند وجود حجز جديد</p>
                 </div>
                 
                 <button 
                   onClick={() => setTelegramEnabled(!telegramEnabled)}
-                  className={`w-12 h-6 rounded-full relative transition-colors ${telegramEnabled ? 'bg-amber-500' : 'bg-neutral-600'}`}
+                  style={{
+                    width: '48px', height: '24px', borderRadius: '12px', position: 'relative', transition: 'background 0.3s',
+                    background: telegramEnabled ? 'var(--color-primary)' : '#444', border: 'none', cursor: 'pointer'
+                  }}
                 >
-                  <div className={`absolute top-1 w-4 h-4 rounded-full bg-white transition-all ${telegramEnabled ? 'left-1' : 'right-1'}`}></div>
+                  <div style={{
+                    position: 'absolute', top: '4px', width: '16px', height: '16px', borderRadius: '50%', background: '#fff', transition: 'all 0.3s',
+                    left: telegramEnabled ? '4px' : '28px'
+                  }}></div>
                 </button>
               </div>
 
-              <div className={`transition-all ${telegramEnabled ? 'opacity-100' : 'opacity-50 pointer-events-none'}`}>
-                <label className="block text-sm font-medium text-neutral-300 mb-1.5">معرف المحادثة (Chat ID)</label>
-                <div className="relative">
-                  <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-neutral-500">
+              <div style={{ opacity: telegramEnabled ? 1 : 0.5, pointerEvents: telegramEnabled ? 'auto' : 'none', transition: 'opacity 0.3s' }}>
+                <label style={{ display: 'block', fontSize: '0.9rem', fontWeight: '500', color: '#ccc', marginBottom: '6px' }}>معرف المحادثة (Chat ID)</label>
+                <div style={{ position: 'relative' }}>
+                  <div style={{ position: 'absolute', top: 0, bottom: 0, right: 0, display: 'flex', alignItems: 'center', paddingRight: '12px', pointerEvents: 'none', color: '#666' }}>
                     <Bell size={18} />
                   </div>
                   <input
@@ -181,11 +213,11 @@ export default function DashboardSettings() {
                     value={chatId}
                     onChange={(e) => setChatId(e.target.value)}
                     dir="ltr"
-                    className="w-full bg-neutral-900 border border-neutral-700 rounded-xl py-2.5 pl-4 pr-10 text-white focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 transition-colors text-left"
+                    style={{ width: '100%', background: '#000', border: '1px solid #333', borderRadius: 'var(--radius)', padding: '10px 16px 10px 40px', color: 'var(--color-text)', outline: 'none', textAlign: 'left', boxSizing: 'border-box' }}
                     placeholder="e.g. 123456789"
                   />
                 </div>
-                <p className="text-xs text-neutral-500 mt-2">تواصل مع بوت @SalonBot للحصول على المعرف الخاص بك.</p>
+                <p style={{ fontSize: '0.8rem', color: '#666', marginTop: '8px', marginBottom: 0 }}>تواصل مع بوت @SalonBot للحصول على المعرف الخاص بك.</p>
               </div>
             </div>
           </div>

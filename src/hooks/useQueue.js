@@ -1,14 +1,16 @@
 import { useState } from 'react';
+import { useTenant } from '../context/TenantContext';
 
 /**
  * useQueue - manages an in‑memory queue of tickets.
  * Each ticket: { id, name, phone, services, waitTime, status }
  */
 export default function useQueue(initialTickets = []) {
-  const [queue, setQueue] = useState(initialTickets);
+  const { tenantId } = useTenant();
+  const [queue, setQueue] = useState(() => initialTickets.map(t => ({ ...t, tenant_id: tenantId })));
 
   const addTicket = (ticket) => {
-    const newTicket = { ...ticket, id: Date.now(), status: 'waiting' };
+    const newTicket = { ...ticket, id: Date.now(), status: 'waiting', tenant_id: tenantId };
     setQueue((prev) => [...prev, newTicket]);
     console.log('Add ticket (API placeholder)', newTicket);
   };

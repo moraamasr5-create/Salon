@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTenant } from '../context/TenantContext';
 
 // Initial mock services data
 const initialServices = [
@@ -8,10 +9,11 @@ const initialServices = [
 ];
 
 export default function useServices(initial = initialServices) {
-  const [services, setServices] = useState(initial);
+  const { tenantId } = useTenant();
+  const [services, setServices] = useState(() => initial.map(s => ({ ...s, tenant_id: tenantId })));
 
   const addService = (service) => {
-    const newService = { ...service, id: Date.now() };
+    const newService = { ...service, id: Date.now(), tenant_id: tenantId };
     setServices((prev) => [...prev, newService]);
     console.log('Add service (API placeholder)', newService);
   };
