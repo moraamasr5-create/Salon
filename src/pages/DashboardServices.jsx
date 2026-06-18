@@ -57,7 +57,7 @@ function ServiceModal({ open, onClose, onSave, initialData }) {
     <div className="modal-backdrop" style={modalBackdropStyle}>
       <div className="modal" style={modalStyle}>
         <h3>{initialData ? 'تعديل الخدمة' : 'إضافة خدمة'}</h3>
-        <div onClick={handleSubmit}>
+        <div>
           <div style={fieldStyle}>
             <label>الاسم</label>
             <input required value={form.name} onChange={e => handleChange('name', e.target.value)} />
@@ -76,9 +76,9 @@ function ServiceModal({ open, onClose, onSave, initialData }) {
           </div>
           <div style={{ marginTop: '12px', textAlign: 'right' }}>
             <button type="button" onClick={onClose} style={cancelBtnStyle}>إلغاء</button>
-            <button type="submit" style={saveBtnStyle}>{initialData ? 'حفظ' : 'إضافة'}</button>
+            <button type="button" onClick={handleSubmit} style={saveBtnStyle}>{initialData ? 'حفظ' : 'إضافة'}</button>
           </div>
-        </form>
+        </div>
       </div>
     </div>
   );

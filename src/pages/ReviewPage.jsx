@@ -136,7 +136,7 @@ export default function ReviewPage() {
       </div>
 
       {/* Comment textarea */}
-      <form onSubmit={submit} style={{ marginTop: 24, maxWidth: 500 }}>
+      <div style={{ marginTop: 24, maxWidth: 500 }}>
         <div style={{ marginBottom: 12 }}>
           <label>تعليق (اختياري)</label>
           <textarea
@@ -154,10 +154,10 @@ export default function ReviewPage() {
             }}
           />
         </div>
-        <button type="submit" disabled={loading} style={{ padding: '8px 16px' }}>
+        <button type="button" onClick={submit} disabled={loading} style={{ padding: '8px 16px' }}>
           {loading ? 'جارٍ الإرسال…' : 'إرسال التقييم'}
         </button>
-      </form>
+      </div>
     </div>
   );
 }
